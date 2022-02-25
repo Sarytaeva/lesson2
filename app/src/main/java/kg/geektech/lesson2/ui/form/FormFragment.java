@@ -27,9 +27,10 @@ public class FormFragment extends Fragment {
     private FragmentFormBinding binding;
     private static final int groupId = 39;
     private static final int userId = 5;
-    private Post post;
     NavController navController;
     private  int id;
+    Post post;
+
 
 
     @Override
@@ -44,22 +45,19 @@ public class FormFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
+
         if (getArguments() != null){
-            String title = getArguments().getString("title");
-            String content = getArguments().getString("content");
-            binding.content.setText(content);
-            binding.title.setText(title);
+            post = (Post) getArguments().getSerializable("key");
+            binding.content.setText(post.getContent());
+            binding.title.setText(post.getTitle());
 
         }
-
-
-
 
         binding.update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                App.api.updatePost(String.valueOf( id + "" ),new Post(binding.content.getText().toString().trim(),
-                        binding.title.getText().toString().trim())).enqueue(new Callback<Post>() {
+                App.api.updatePost(String.valueOf(post.getId()),new Post(binding.content.getText().toString(),
+                        binding.title.getText().toString())).enqueue(new Callback<Post>() {
                     @Override
                     public void onResponse(Call<Post> call, Response<Post> response) {
                         navController.navigate(R.id.postFragment);

@@ -91,7 +91,7 @@ public class PostFragment extends Fragment {
 
         adapter.setOnItemClick(new Adapter.onItemClick() {
             @Override
-            public void onClick(Post post, int id) {
+            public void onClick(Post post) {
                 Bundle bundle= new Bundle();
                 bundle.putSerializable("key", post);
                 NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);

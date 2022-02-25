@@ -25,7 +25,7 @@ public interface PostApi {
 
     @PUT("posts/{id}")
     Call<Post> updatePost(
-            @Path("id") String  id,
+            @Path("id") String id,
             @Body Post post
     );
 

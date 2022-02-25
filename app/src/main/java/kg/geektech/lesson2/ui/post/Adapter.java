@@ -25,10 +25,10 @@ import retrofit2.Response;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.PostViewHolder> {
     private List<Post> posts = new ArrayList<>();
-onItemClick onItemClick;
+    onItemClick onItemClick;
 
 
-public void setPost(List<Post> post) {
+    public void setPost(List<Post> post) {
         this.posts = post;
         notifyDataSetChanged();
     }
@@ -40,7 +40,7 @@ public void setPost(List<Post> post) {
     @NonNull
     @Override
     public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemPostBinding binding=ItemPostBinding.inflate(
+        ItemPostBinding binding = ItemPostBinding.inflate(
                 LayoutInflater.from(parent.getContext()),
                 parent,
                 false
@@ -50,7 +50,7 @@ public void setPost(List<Post> post) {
 
     @Override
     public void onBindViewHolder(@NonNull PostViewHolder holder, int position) {
-     holder.onBind(posts.get(position));
+        holder.onBind(posts.get(position));
 
     }
 
@@ -59,22 +59,39 @@ public void setPost(List<Post> post) {
         return posts.size();
     }
 
-    protected class  PostViewHolder extends RecyclerView.ViewHolder{
+    protected class PostViewHolder extends RecyclerView.ViewHolder {
         private ItemPostBinding binding;
-        public  PostViewHolder(@NonNull ItemPostBinding binding) {
+
+        public PostViewHolder(@NonNull ItemPostBinding binding) {
             super(binding.getRoot());
-            this.binding= binding;
+            this.binding = binding;
         }
 
         public void onBind(Post post) {
-            binding.tvUserId.setText("");
+
+
+            HashMap<Integer, String> hashMap = new HashMap<>();
+
+            hashMap.put(1, "fbeg");
+            hashMap.put(2, "et");
+            hashMap.put(3, "te");
+            hashMap.put(4, "ete");
+            hashMap.put(5, "sbd");
+            hashMap.put(6, "as");
+            hashMap.put(7, "hj");
+            hashMap.put(8, "syt");
+
+            ArrayList<String> arrayList = new ArrayList<>(hashMap.values());
+
+            binding.tvUserId.setText(arrayList.get(post.getId()));
             binding.tvTitle.setText(post.getTitle());
             binding.tvDescription.setText(post.getContent());
+
 
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClick.onClick(post, post.getId());
+                    onItemClick.onClick(post);
                 }
             });
             itemView.setOnLongClickListener(view -> {
@@ -97,13 +114,7 @@ public void setPost(List<Post> post) {
                         });
                     }
                 });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                    }
-                });
+                builder.setNegativeButton("No", null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
                 onItemClick.onLongClick(post, post.getId());
@@ -113,10 +124,11 @@ public void setPost(List<Post> post) {
         }
 
 
-
     }
-    public interface onItemClick{
-        void onClick(Post post, int id);
+
+    public interface onItemClick {
+        void onClick(Post post);
+
         void onLongClick(Post post, int id);
 
     }
